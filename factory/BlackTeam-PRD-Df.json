@@ -1,0 +1,9 @@
+{
+	"name": "BlackTeam-PRD-Df",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "daba6235-7fbd-4b74-b6b8-9ccb83f3b568",
+		"tenantId": "e4559af3-b73e-4cc4-967a-c594c303a23e"
+	}
+}

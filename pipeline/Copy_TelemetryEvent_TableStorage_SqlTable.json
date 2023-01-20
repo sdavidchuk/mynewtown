@@ -1,0 +1,231 @@
+{
+	"name": "Copy_TelemetryEvent_TableStorage_SqlTable",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "TelemetryEventJan"
+					},
+					{
+						"name": "Destination",
+						"value": ".TelemetryEvent"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "AzureTableSource",
+						"azureTableSourceIgnoreTableNotFound": false
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "PartitionKey",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PartitionKey",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RowKey",
+									"type": "String"
+								},
+								"sink": {
+									"name": "RowKey",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Timestamp",
+									"type": "DateTimeOffset"
+								},
+								"sink": {
+									"name": "Timestamp",
+									"type": "DateTimeOffset",
+									"physicalType": "datetimeoffset"
+								}
+							},
+							{
+								"source": {
+									"name": "ElementId",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ElementId",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "EndTime",
+									"type": "DateTimeOffset"
+								},
+								"sink": {
+									"name": "EndTime",
+									"type": "DateTimeOffset",
+									"physicalType": "datetimeoffset"
+								}
+							},
+							{
+								"source": {
+									"name": "EpochEndTime",
+									"type": "Int64"
+								},
+								"sink": {
+									"name": "EpochEndTime",
+									"type": "Int64",
+									"physicalType": "bigint"
+								}
+							},
+							{
+								"source": {
+									"name": "EpochStartTime",
+									"type": "Int64"
+								},
+								"sink": {
+									"name": "EpochStartTime",
+									"type": "Int64",
+									"physicalType": "bigint"
+								}
+							},
+							{
+								"source": {
+									"name": "EventType",
+									"type": "String"
+								},
+								"sink": {
+									"name": "EventType",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ExamType",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ExamType",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ItemNumber",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ItemNumber",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "SectionNumber",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "SectionNumber",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "StartTime",
+									"type": "DateTimeOffset"
+								},
+								"sink": {
+									"name": "StartTime",
+									"type": "DateTimeOffset",
+									"physicalType": "datetimeoffset"
+								}
+							},
+							{
+								"source": {
+									"name": "TestCode",
+									"type": "String"
+								},
+								"sink": {
+									"name": "TestCode",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "UserId",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UserId",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Response",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Response",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_x6r",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_x6r",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2023-01-20T00:52:18Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

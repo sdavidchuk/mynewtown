@@ -1,0 +1,16 @@
+{
+	"name": "DestinationDataset_x6r",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AGL1DIGPRD2abc_LinkedServer",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"table": "TelemetryEvent"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

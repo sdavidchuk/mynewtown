@@ -1,0 +1,17 @@
+{
+	"name": "AGL1DIGPRD2abc_LinkedServer",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "AGL1-DIGPRD2abc",
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"connectionString": "integrated security=False;data source=AGL1-DIGPRD2abc;initial catalog=TELEMETRY_STAGING;user id=datafactoryuser",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJmMTE5ZmNiMC0xM2I1LTQ2NTctYmE1YS0zNTgzNTgzZWRkZDIiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "IR-SHARED-TELEMETRY-STAGING-PROD",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

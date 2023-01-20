@@ -1,0 +1,13 @@
+{
+	"name": "IR-SHARED-TELEMETRY-STAGING-PROD",
+	"properties": {
+		"type": "SelfHosted",
+		"description": "shared with FlexTest-Scoring-Prd-Df",
+		"typeProperties": {
+			"linkedInfo": {
+				"resourceId": "/subscriptions/f920089a-be1b-416e-ad5a-54aeedaff5e8/resourcegroups/flextest-scoring-prd-rg/providers/Microsoft.DataFactory/factories/FlexTest-Scoring-Prd-Df/integrationruntimes/SQLServer-IntegrationRuntime-onPrem-PRD",
+				"authorizationType": "Rbac"
+			}
+		}
+	}
+}

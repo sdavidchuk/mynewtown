@@ -1,0 +1,217 @@
+{
+	"name": "CopyPipeline_TelemetryEventJan",
+	"properties": {
+		"description": "TelemetryEventJan from telemetrylistenerprd to diglsatdb2a-prd TELEMETRY_STAGING",
+		"activities": [
+			{
+				"name": "Copy_x6r",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "TelemetryEventJan"
+					},
+					{
+						"name": "Destination",
+						"value": ".TelemetryEventJan"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "AzureTableSource",
+						"azureTableSourceIgnoreTableNotFound": false
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"tableOption": "autoCreate"
+					},
+					"enableStaging": false,
+					"validateDataConsistency": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "PartitionKey",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PartitionKey",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "RowKey",
+									"type": "String"
+								},
+								"sink": {
+									"name": "RowKey",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Timestamp",
+									"type": "DateTimeOffset"
+								},
+								"sink": {
+									"name": "Timestamp",
+									"type": "DateTimeOffset"
+								}
+							},
+							{
+								"source": {
+									"name": "ElementId",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ElementId",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "EndTime",
+									"type": "DateTimeOffset"
+								},
+								"sink": {
+									"name": "EndTime",
+									"type": "DateTimeOffset"
+								}
+							},
+							{
+								"source": {
+									"name": "EpochEndTime",
+									"type": "Int64"
+								},
+								"sink": {
+									"name": "EpochEndTime",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "EpochStartTime",
+									"type": "Int64"
+								},
+								"sink": {
+									"name": "EpochStartTime",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "EventType",
+									"type": "String"
+								},
+								"sink": {
+									"name": "EventType",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ExamType",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ExamType",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ItemNumber",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "ItemNumber",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "SectionNumber",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "SectionNumber",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "StartTime",
+									"type": "DateTimeOffset"
+								},
+								"sink": {
+									"name": "StartTime",
+									"type": "DateTimeOffset"
+								}
+							},
+							{
+								"source": {
+									"name": "TestCode",
+									"type": "String"
+								},
+								"sink": {
+									"name": "TestCode",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UserId",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UserId",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Response",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Response",
+									"type": "String"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_x6r",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_x6r",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2023-01-18T00:05:25Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
