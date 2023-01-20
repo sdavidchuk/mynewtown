@@ -1,0 +1,18 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "BlackTeam-PRD-Df"
+		},
+		"AGL1DIGPRD2abc_LinkedServer_connectionString": {
+			"value": ""
+		},
+		"AzureTableStorage_telemetrylistenerprd_sasUri": {
+			"value": ""
+		},
+		"IR-SHARED-TELEMETRY-STAGING-PROD_properties_typeProperties_linkedInfo_resourceId": {
+			"value": "/subscriptions/f920089a-be1b-416e-ad5a-54aeedaff5e8/resourcegroups/flextest-scoring-prd-rg/providers/Microsoft.DataFactory/factories/FlexTest-Scoring-Prd-Df/integrationruntimes/SQLServer-IntegrationRuntime-onPrem-PRD"
+		}
+	}
+}

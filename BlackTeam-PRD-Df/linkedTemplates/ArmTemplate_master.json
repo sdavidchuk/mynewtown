@@ -1,0 +1,63 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "BlackTeam-PRD-Df"
+		},
+		"AGL1DIGPRD2abc_LinkedServer_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AGL1DIGPRD2abc_LinkedServer'"
+		},
+		"AzureTableStorage_telemetrylistenerprd_sasUri": {
+			"type": "secureString",
+			"metadata": "Secure string for 'sasUri' of 'AzureTableStorage_telemetrylistenerprd'"
+		},
+		"IR-SHARED-TELEMETRY-STAGING-PROD_properties_typeProperties_linkedInfo_resourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/f920089a-be1b-416e-ad5a-54aeedaff5e8/resourcegroups/flextest-scoring-prd-rg/providers/Microsoft.DataFactory/factories/FlexTest-Scoring-Prd-Df/integrationruntimes/SQLServer-IntegrationRuntime-onPrem-PRD"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "BlackTeam-PRD-Df_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AGL1DIGPRD2abc_LinkedServer_connectionString": {
+						"value": "[parameters('AGL1DIGPRD2abc_LinkedServer_connectionString')]"
+					},
+					"AzureTableStorage_telemetrylistenerprd_sasUri": {
+						"value": "[parameters('AzureTableStorage_telemetrylistenerprd_sasUri')]"
+					},
+					"IR-SHARED-TELEMETRY-STAGING-PROD_properties_typeProperties_linkedInfo_resourceId": {
+						"value": "[parameters('IR-SHARED-TELEMETRY-STAGING-PROD_properties_typeProperties_linkedInfo_resourceId')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}

@@ -1,0 +1,587 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "BlackTeam-PRD-Df"
+		},
+		"AGL1DIGPRD2abc_LinkedServer_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AGL1DIGPRD2abc_LinkedServer'"
+		},
+		"AzureTableStorage_telemetrylistenerprd_sasUri": {
+			"type": "secureString",
+			"metadata": "Secure string for 'sasUri' of 'AzureTableStorage_telemetrylistenerprd'"
+		},
+		"IR-SHARED-TELEMETRY-STAGING-PROD_properties_typeProperties_linkedInfo_resourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/f920089a-be1b-416e-ad5a-54aeedaff5e8/resourcegroups/flextest-scoring-prd-rg/providers/Microsoft.DataFactory/factories/FlexTest-Scoring-Prd-Df/integrationruntimes/SQLServer-IntegrationRuntime-onPrem-PRD"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/CopyPipeline_TelemetryEventJan')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "TelemetryEventJan from telemetrylistenerprd to diglsatdb2a-prd TELEMETRY_STAGING",
+				"activities": [
+					{
+						"name": "Copy_x6r",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "TelemetryEventJan"
+							},
+							{
+								"name": "Destination",
+								"value": ".TelemetryEventJan"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "AzureTableSource",
+								"azureTableSourceIgnoreTableNotFound": false
+							},
+							"sink": {
+								"type": "SqlServerSink",
+								"tableOption": "autoCreate"
+							},
+							"enableStaging": false,
+							"validateDataConsistency": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "PartitionKey",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PartitionKey",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "RowKey",
+											"type": "String"
+										},
+										"sink": {
+											"name": "RowKey",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Timestamp",
+											"type": "DateTimeOffset"
+										},
+										"sink": {
+											"name": "Timestamp",
+											"type": "DateTimeOffset"
+										}
+									},
+									{
+										"source": {
+											"name": "ElementId",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ElementId",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "EndTime",
+											"type": "DateTimeOffset"
+										},
+										"sink": {
+											"name": "EndTime",
+											"type": "DateTimeOffset"
+										}
+									},
+									{
+										"source": {
+											"name": "EpochEndTime",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "EpochEndTime",
+											"type": "Int64"
+										}
+									},
+									{
+										"source": {
+											"name": "EpochStartTime",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "EpochStartTime",
+											"type": "Int64"
+										}
+									},
+									{
+										"source": {
+											"name": "EventType",
+											"type": "String"
+										},
+										"sink": {
+											"name": "EventType",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ExamType",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ExamType",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ItemNumber",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "ItemNumber",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "SectionNumber",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "SectionNumber",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "StartTime",
+											"type": "DateTimeOffset"
+										},
+										"sink": {
+											"name": "StartTime",
+											"type": "DateTimeOffset"
+										}
+									},
+									{
+										"source": {
+											"name": "TestCode",
+											"type": "String"
+										},
+										"sink": {
+											"name": "TestCode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "UserId",
+											"type": "String"
+										},
+										"sink": {
+											"name": "UserId",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response",
+											"type": "String"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SourceDataset_x6r",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DestinationDataset_x6r",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-01-18T00:05:25Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SourceDataset_x6r')]",
+				"[concat(variables('factoryId'), '/datasets/DestinationDataset_x6r')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Copy_TelemetryEvent_TableStorage_SqlTable')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "TelemetryEventJan"
+							},
+							{
+								"name": "Destination",
+								"value": ".TelemetryEvent"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "AzureTableSource",
+								"azureTableSourceIgnoreTableNotFound": false
+							},
+							"sink": {
+								"type": "SqlServerSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "PartitionKey",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PartitionKey",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "RowKey",
+											"type": "String"
+										},
+										"sink": {
+											"name": "RowKey",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Timestamp",
+											"type": "DateTimeOffset"
+										},
+										"sink": {
+											"name": "Timestamp",
+											"type": "DateTimeOffset",
+											"physicalType": "datetimeoffset"
+										}
+									},
+									{
+										"source": {
+											"name": "ElementId",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ElementId",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "EndTime",
+											"type": "DateTimeOffset"
+										},
+										"sink": {
+											"name": "EndTime",
+											"type": "DateTimeOffset",
+											"physicalType": "datetimeoffset"
+										}
+									},
+									{
+										"source": {
+											"name": "EpochEndTime",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "EpochEndTime",
+											"type": "Int64",
+											"physicalType": "bigint"
+										}
+									},
+									{
+										"source": {
+											"name": "EpochStartTime",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "EpochStartTime",
+											"type": "Int64",
+											"physicalType": "bigint"
+										}
+									},
+									{
+										"source": {
+											"name": "EventType",
+											"type": "String"
+										},
+										"sink": {
+											"name": "EventType",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ExamType",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ExamType",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ItemNumber",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "ItemNumber",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "SectionNumber",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "SectionNumber",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "StartTime",
+											"type": "DateTimeOffset"
+										},
+										"sink": {
+											"name": "StartTime",
+											"type": "DateTimeOffset",
+											"physicalType": "datetimeoffset"
+										}
+									},
+									{
+										"source": {
+											"name": "TestCode",
+											"type": "String"
+										},
+										"sink": {
+											"name": "TestCode",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "UserId",
+											"type": "String"
+										},
+										"sink": {
+											"name": "UserId",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Response",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SourceDataset_x6r",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DestinationDataset_x6r",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-01-20T00:52:18Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SourceDataset_x6r')]",
+				"[concat(variables('factoryId'), '/datasets/DestinationDataset_x6r')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DestinationDataset_x6r')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AGL1DIGPRD2abc_LinkedServer",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {
+					"table": "TelemetryEvent"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AGL1DIGPRD2abc_LinkedServer')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_x6r')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureTableStorage_telemetrylistenerprd",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureTable",
+				"schema": [],
+				"typeProperties": {
+					"tableName": "TelemetryEventJan"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureTableStorage_telemetrylistenerprd')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AGL1DIGPRD2abc_LinkedServer')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "AGL1-DIGPRD2abc",
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"connectionString": "[parameters('AGL1DIGPRD2abc_LinkedServer_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "IR-SHARED-TELEMETRY-STAGING-PROD",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/IR-SHARED-TELEMETRY-STAGING-PROD')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureTableStorage_telemetrylistenerprd')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureTableStorage",
+				"typeProperties": {
+					"sasUri": "[parameters('AzureTableStorage_telemetrylistenerprd_sasUri')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/IR-SHARED-TELEMETRY-STAGING-PROD')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "SelfHosted",
+				"description": "shared with FlexTest-Scoring-Prd-Df",
+				"typeProperties": {
+					"linkedInfo": {
+						"resourceId": "[parameters('IR-SHARED-TELEMETRY-STAGING-PROD_properties_typeProperties_linkedInfo_resourceId')]",
+						"authorizationType": "Rbac"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
